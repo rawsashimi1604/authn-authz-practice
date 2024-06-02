@@ -1,5 +1,22 @@
 # authn-authz-practice
 
+## Creating a python virutal environmnet
+
+Create a python virtual environment to prevent clashing of dependencies and for
+best practice. command is either `python` or `python3`
+
+```bash
+python -m venv authpractice
+source authpractice/bin/activate
+```
+
+To deactivate the virtual environment
+```
+cd authpractice/bin
+deactivate
+```
+
+
 ## Ldap practice
 
 script is `ldap-connect.py`
