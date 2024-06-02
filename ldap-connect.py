@@ -1,10 +1,10 @@
 from ldap3 import Server, Connection, ALL, SUBTREE
 
 # LDAP server configuration
-ldap_server = 'ldap://your-ldap-server.com'
-ldap_user = 'cn=admin,dc=example,dc=com'
-ldap_password = 'your_password'
-base_dn = 'dc=example,dc=com'
+ldap_server = 'ldap://localhost'
+ldap_user = 'cn=admin,dc=example,dc=org'
+ldap_password = 'adminpassword'
+base_dn = 'dc=example,dc=org'
 
 # Connect to the LDAP server
 server = Server(ldap_server, get_info=ALL)
