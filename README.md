@@ -19,7 +19,7 @@ deactivate
 
 ## Ldap practice
 
-script is `ldap-connect.py`
+script is `ldap.py`
 
 ### Creating a ldap server locally
 
@@ -40,3 +40,9 @@ Try this command to query the ldap server
 ldapsearch -x -H ldap://localhost -D "cn=admin,dc=example,dc=org" -w
 adminpassword -b "dc=example,dc=org"
 ```
+
+## Kerboros pracgtice
+
+## Oauth 2 practice
+
+## Open id connect practice
