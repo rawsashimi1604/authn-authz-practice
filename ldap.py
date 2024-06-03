@@ -1,4 +1,5 @@
 from ldap3 import Server, Connection, ALL, SUBTREE
+from ldap3.core.exceptions import LDAPException
 
 class LdapManager:
     ldap_server = 'ldap://localhost'
@@ -34,14 +35,38 @@ class LdapManager:
         print("Quit the connection.")
 
     def add(self, dn, attributes):
-        self.conn.add(dn, attributes)
-        result_description = self.conn.result["description"]
-        if result_description == "success":
-            print(f"Successfully added the entry. {dn}")
-        else:
-            print(f"Failed to add the entry. {result_description}")
+        try:
+            self.conn.add(dn, attributes=attributes)
+            result_description = self.conn.result["description"]
+            if result_description == "success":
+                print(f"Successfully added the entry. {dn}")
+            else:
+                print(f"Failed to add the entry. {result_description}")
+        except LDAPException as e:
+            print(f"Error adding entry: {e}")
 
 if __name__=="__main__":
     ldap_manager = LdapManager()
+
+    ou_dn = 'ou=users,dc=example,dc=org'
+    ou_attributes = {
+        'objectClass': ['top', 'organizationalUnit'],
+        'ou': ['users']
+    }
+
+    ldap_manager.add(ou_dn, ou_attributes)
+        
+    added_dn = 'cn=John Doe,ou=users,dc=example,dc=org'
+    added_attributes = {
+        'objectClass': ['top', 'person', 'organizationalPerson', 'inetOrgPerson'],
+        'cn': ['John Doe'],
+        'sn': ['Doe'],
+        'givenName': ['John'],
+        'mail': ['john.doe@example.org'],
+        'uid': ['johndoe'],
+        'userPassword': ['password123']
+    }   
+
+    ldap_manager.add(added_dn, added_attributes)
     ldap_manager.search('(objectClass=person)', ['cn', 'sn', 'mail'])
     ldap_manager.quit()
