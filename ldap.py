@@ -42,12 +42,25 @@ class LdapManager:
                 print(f"Successfully added the entry. {dn}")
             else:
                 print(f"Failed to add the entry. {result_description}")
+        
         except LDAPException as e:
             print(f"Error adding entry: {e}")
 
+    def delete(self, dn):
+        try:
+            self.conn.delete(dn)
+            result_description = self.conn.result["description"]
+            if result_description == "success":
+                print(f"Successfully deleted the entry. {dn}")
+            else:
+                print(f"Failed to delete the entry. {result_description}")
+        
+        except LDAPException as e:
+            print(f"Error deleting entry: {e}")    
+
 if __name__=="__main__":
     ldap_manager = LdapManager()
-
+    
     ou_dn = 'ou=users,dc=example,dc=org'
     ou_attributes = {
         'objectClass': ['top', 'organizationalUnit'],
@@ -55,7 +68,7 @@ if __name__=="__main__":
     }
 
     ldap_manager.add(ou_dn, ou_attributes)
-        
+
     added_dn = 'cn=John Doe,ou=users,dc=example,dc=org'
     added_attributes = {
         'objectClass': ['top', 'person', 'organizationalPerson', 'inetOrgPerson'],
@@ -64,9 +77,9 @@ if __name__=="__main__":
         'givenName': ['John'],
         'mail': ['john.doe@example.org'],
         'uid': ['johndoe'],
-        'userPassword': ['password123']
-    }   
+        'userPassword': ['password123'] # should hash the password in prod
+    }
 
     ldap_manager.add(added_dn, added_attributes)
-    ldap_manager.search('(objectClass=person)', ['cn', 'sn', 'mail'])
+    ldap_manager.search('(objectClass=inetOrgPerson)', ['cn', 'sn', 'mail'])
     ldap_manager.quit()

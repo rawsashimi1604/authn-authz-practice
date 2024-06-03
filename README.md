@@ -37,8 +37,7 @@ script is `ldap.py`
 Try this command to query the ldap server
 
 ```bash
-ldapsearch -x -H ldap://localhost -D "cn=admin,dc=example,dc=org" -w
-adminpassword -b "dc=example,dc=org"
+ldapsearch -x -H ldap://localhost -D "cn=admin,dc=example,dc=org" -w adminpassword -b "dc=example,dc=org"
 ```
 
 ## Kerboros practice
